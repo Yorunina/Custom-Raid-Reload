@@ -8,8 +8,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.Mth;
@@ -37,6 +39,8 @@ public class RaidComponent implements IRaidComponent {
 	private SoundEvent lossSound;
 	private int winCD;
 	private int lossCD;
+	private boolean loop;
+	private boolean ignoreFailure;
 
 	@Override
 	public boolean readJson(JsonObject json) {
@@ -59,6 +63,14 @@ public class RaidComponent implements IRaidComponent {
 		    if(text != null) {
 			    this.lossTitle = text;
 		    }
+		}
+
+		/* custom */
+		{
+			this.loop =  GsonHelper.getAsBoolean(json, StringUtil.LOOP);
+		}
+		{
+			this.ignoreFailure =  GsonHelper.getAsBoolean(json, StringUtil.IGNORE_FAILURE);
 		}
 
 
@@ -164,6 +176,25 @@ public class RaidComponent implements IRaidComponent {
 	public boolean hasTag(String tag) {
 		return this.tags.contains(tag);
 	}
+
+	@Override
+	public boolean isLoopType() {
+		return this.loop;
+	}
+
+	@Override
+	public boolean isFailGoingOn() {
+		return this.ignoreFailure;
+	}
+
+	@Override
+	public boolean doPunishCommand(int wavePos) {
+		this.waves.get(wavePos).getPunishCommand();
+		String command = "some command";
+
+		return false;
+	}
+
 
 	@Override
 	public int getPrepareCD(int wavePos) {

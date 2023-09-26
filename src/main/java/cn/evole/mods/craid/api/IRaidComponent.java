@@ -44,6 +44,21 @@ public interface IRaidComponent {
 
 	boolean hasTag(String tag);
 
+	/**
+	 * respawn all wave when end
+	 */
+	boolean isLoopType();
+
+	/**
+	 * go to the next wave when meet failure
+	 */
+	boolean isFailGoingOn();
+
+	/**
+	 * go to the next wave when meet failure
+	 */
+	boolean doPunishCommand(int wavePos);
+
 	List<String> getAuthors();
 
 	/**

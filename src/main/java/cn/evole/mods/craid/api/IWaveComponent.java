@@ -28,4 +28,6 @@ public interface IWaveComponent {
 	List<ISpawnComponent> getSpawns();
 
 	IPlacementComponent getPlacement();
+
+	String getPunishCommand();
 }

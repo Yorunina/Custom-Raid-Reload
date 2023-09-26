@@ -13,68 +13,79 @@ import net.minecraft.util.GsonHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class WaveComponent implements IWaveComponent {
 
-	public static final String NAME = "default";
-	private List<ISpawnComponent> spawns = new ArrayList<>();
-	private IPlacementComponent placement;
-	private int duration;
-	private int preCD;
+    public static final String NAME = "default";
+    private List<ISpawnComponent> spawns = new ArrayList<>();
+    private IPlacementComponent placement;
+    private int duration;
+    private int preCD;
 
-	@Override
-	public boolean readJson(JsonObject json) {
+    private String punishCommand;
 
-		/* duration */
-		this.duration = GsonHelper.getAsInt(json, StringUtil.WAVE_DURATION, 0);
-		if(this.duration == 0) {
-			throw new JsonSyntaxException("Wave duration cannot be empty or zero");
-		}
+    @Override
+    public boolean readJson(JsonObject json) {
 
-		/* pre tick */
-		this.preCD = GsonHelper.getAsInt(json, StringUtil.PRE_CD, 100);
+        /* duration */
+        this.duration = GsonHelper.getAsInt(json, StringUtil.WAVE_DURATION, 0);
+        if (this.duration == 0) {
+            throw new JsonSyntaxException("Wave duration cannot be empty or zero");
+        }
 
-		/* spawn placement */
-		this.placement = CRaidUtil.readPlacement(json, false);
+        /* duration */
+        this.punishCommand = GsonHelper.getAsString(json, StringUtil.FAILURE_PUNISHMENT, "");
 
-		/* spawn list */
-		JsonArray jsonSpawns = GsonHelper.getAsJsonArray(json, StringUtil.SPAWNS, new JsonArray());
-		for(int i = 0; i < jsonSpawns.size(); ++ i) {
-			JsonObject obj = jsonSpawns.get(i).getAsJsonObject();
-		    if(obj != null) {
-		    	String type = GsonHelper.getAsString(obj, StringUtil.TYPE, "");
-	            ISpawnComponent spawn = RaidManager.getSpawnType(type);
-	            if(! spawn.readJson(obj)) {
-	            	return false;
-	            }
-			    this.spawns.add(spawn);
-		    }
-		}
-		if(this.spawns.isEmpty()) {
-			throw new JsonSyntaxException("Spawn list cannot be empty");
-		}
+        /* pre tick */
+        this.preCD = GsonHelper.getAsInt(json, StringUtil.PRE_CD, 100);
 
-		return true;
-	}
+        /* spawn placement */
+        this.placement = CRaidUtil.readPlacement(json, false);
 
-	@Override
-	public List<ISpawnComponent> getSpawns(){
-		return this.spawns;
-	}
+        /* spawn list */
+        JsonArray jsonSpawns = GsonHelper.getAsJsonArray(json, StringUtil.SPAWNS, new JsonArray());
+        for (int i = 0; i < jsonSpawns.size(); ++i) {
+            JsonObject obj = jsonSpawns.get(i).getAsJsonObject();
+            if (obj != null) {
+                String type = GsonHelper.getAsString(obj, StringUtil.TYPE, "");
+                ISpawnComponent spawn = RaidManager.getSpawnType(type);
+                if (!spawn.readJson(obj)) {
+                    return false;
+                }
+                this.spawns.add(spawn);
+            }
+        }
+        if (this.spawns.isEmpty()) {
+            throw new JsonSyntaxException("Spawn list cannot be empty");
+        }
 
-	@Override
-	public IPlacementComponent getPlacement() {
-		return this.placement;
-	}
+        return true;
+    }
 
-	@Override
-	public int getPrepareCD() {
-		return this.preCD;
-	}
+    @Override
+    public List<ISpawnComponent> getSpawns() {
+        return this.spawns;
+    }
 
-	@Override
-	public int getLastDuration() {
-		return this.duration;
-	}
+    @Override
+    public IPlacementComponent getPlacement() {
+        return this.placement;
+    }
+
+    @Override
+    public String getPunishCommand() {
+        return this.punishCommand;
+    }
+
+    @Override
+    public int getPrepareCD() {
+        return this.preCD;
+    }
+
+    @Override
+    public int getLastDuration() {
+        return this.duration;
+    }
 
 }
