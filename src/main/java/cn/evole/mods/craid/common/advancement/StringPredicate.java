@@ -7,32 +7,32 @@ import javax.annotation.Nullable;
 
 public class StringPredicate {
 
-	public static final StringPredicate ANY = new StringPredicate();
-	private final String s;
+    public static final StringPredicate ANY = new StringPredicate();
+    private final String s;
 
-	public StringPredicate() {
-		s = "";
-	}
+    public StringPredicate() {
+        s = "";
+    }
 
-	public StringPredicate(String s) {
-		this.s = s;
-	}
+    public StringPredicate(String s) {
+        this.s = s;
+    }
 
-	public boolean test(ServerPlayer player, String ss) {
-		if(this == ANY) return true;
-		return this.s.equals(ss);
-	}
+    public boolean test(ServerPlayer player, String ss) {
+        if (this == ANY) return true;
+        return this.s.equals(ss);
+    }
 
-	public static StringPredicate deserialize(@Nullable JsonElement element) {
-		if (element != null && element.isJsonPrimitive()) {
-			return new StringPredicate(element.getAsString());
-		} else {
-			return ANY;
-		}
-	}
+    public static StringPredicate deserialize(@Nullable JsonElement element) {
+        if (element != null && element.isJsonPrimitive()) {
+            return new StringPredicate(element.getAsString());
+        } else {
+            return ANY;
+        }
+    }
 
-	public String serialize() {
-		return this.s;
-	}
+    public String serialize() {
+        return this.s;
+    }
 
 }

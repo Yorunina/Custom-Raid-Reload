@@ -9,7 +9,7 @@
     "description": {
       "translate": "advancement.craid.root.desc"
     },
-	"frame":"task",
+    "frame": "task",
     "background": "textures/block/stone.png",
     "announce_to_chat": true
   },
@@ -21,10 +21,12 @@
       }
     }
   },
-  "requirements": [[
-    "in_world"
-  ]],
-  "rewards":{
-    "experience":100
+  "requirements": [
+    [
+      "in_world"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
   }
 }

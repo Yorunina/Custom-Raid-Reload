@@ -9,24 +9,24 @@ import net.minecraft.world.level.Level;
 
 public class AdvancementRewardComponent implements IRewardComponent {
 
-	public static final String NAME = "advancements";
-	private AdvancementRewards reward = AdvancementRewards.EMPTY;
+    public static final String NAME = "advancements";
+    private AdvancementRewards reward = AdvancementRewards.EMPTY;
 
-	@Override
-	public void reward(ServerPlayer player) {
-		this.reward.grant(player);
-	}
+    @Override
+    public void reward(ServerPlayer player) {
+        this.reward.grant(player);
+    }
 
-	@Override
-	public void rewardGlobally(Level world) {
-	}
+    @Override
+    public void rewardGlobally(Level world) {
+    }
 
-	@Override
-	public void readJson(JsonElement json) {
-		final JsonObject obj = json.getAsJsonObject();
-		if(obj != null) {
-			this.reward = AdvancementRewards.deserialize(obj);
-		}
-	}
+    @Override
+    public void readJson(JsonElement json) {
+        final JsonObject obj = json.getAsJsonObject();
+        if (obj != null) {
+            this.reward = AdvancementRewards.deserialize(obj);
+        }
+    }
 
 }

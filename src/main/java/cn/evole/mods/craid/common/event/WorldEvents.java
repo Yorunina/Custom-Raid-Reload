@@ -9,11 +9,11 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = CRaid.MOD_ID)
 public class WorldEvents {
 
-	@SubscribeEvent
-	public static void onWorldTick(TickEvent.LevelTickEvent ev) {
-		if (ev.phase == TickEvent.Phase.END) {
-			RaidManager.tickRaids(ev.level);
-		}
-	}
+    @SubscribeEvent
+    public static void onWorldTick(TickEvent.LevelTickEvent ev) {
+        if (ev.phase == TickEvent.Phase.END) {
+            RaidManager.tickRaids(ev.level);
+        }
+    }
 
 }

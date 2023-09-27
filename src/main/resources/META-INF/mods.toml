@@ -1,19 +1,19 @@
-modLoader="javafml"
-license="GNU LESSER GENERAL PUBLIC LICENSE"
-loaderVersion="[43,)"
+modLoader = "javafml"
+license = "GNU LESSER GENERAL PUBLIC LICENSE"
+loaderVersion = "[43,)"
 
 [[mods]]
-modId="craid"
-version="${version}"
-displayName="CustomRaid"
-authors="cnlimiter, _HungTeen_"
+modId = "craid"
+version = "${version}"
+displayName = "CustomRaid"
+authors = "cnlimiter, _HungTeen_"
 #logoFile="logo.png"
-credits="Nope"
-description="help players make custom raids easily"
+credits = "Nope"
+description = "help players make custom raids easily"
 
 [[dependencies.craid]]
-    modId="forge"
-    mandatory=true
-    versionRange="[43,)"
-    ordering="NONE"
-    side="BOTH"
+modId = "forge"
+mandatory = true
+versionRange = "[43,)"
+ordering = "NONE"
+side = "BOTH"

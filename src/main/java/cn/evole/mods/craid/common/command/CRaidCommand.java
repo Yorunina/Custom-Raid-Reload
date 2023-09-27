@@ -20,61 +20,61 @@ import java.util.Collection;
 
 public class CRaidCommand {
 
-	public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
-		LiteralArgumentBuilder<CommandSourceStack> builder = Commands.literal("craid").requires(ctx -> ctx.hasPermission(2));
-		builder.then(Commands.literal("add").then(Commands.argument("type", ResourceLocationArgument.id())
-				.then(Commands.argument("pos", BlockPosArgument.blockPos()).executes((command) -> {
-					return addRaid(command.getSource(), getResourceLocation(command, "type"),
-							BlockPosArgument.getLoadedBlockPos(command, "pos"));
-				}))));
-		builder.then(Commands.literal("remove").then(Commands.literal("nearby")
-				.then(Commands.argument("pos", BlockPosArgument.blockPos()).executes((command) -> {
-					return removeNearby(command.getSource(), BlockPosArgument.getLoadedBlockPos(command, "pos"));
-				}))).then(Commands.literal("all").executes((command) -> {
-							return removeAll(command.getSource());
-				})));
-		builder.then(Commands.literal("list").then(Commands.argument("targets", EntityArgument.players()).executes((command) -> {
-			return showAllRaid(command.getSource(), EntityArgument.getPlayers(command, "targets"));
-		})));
-		dispatcher.register(builder);
-	}
+    public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
+        LiteralArgumentBuilder<CommandSourceStack> builder = Commands.literal("craid").requires(ctx -> ctx.hasPermission(2));
+        builder.then(Commands.literal("add").then(Commands.argument("type", ResourceLocationArgument.id())
+                .then(Commands.argument("pos", BlockPosArgument.blockPos()).executes((command) -> {
+                    return addRaid(command.getSource(), getResourceLocation(command, "type"),
+                            BlockPosArgument.getLoadedBlockPos(command, "pos"));
+                }))));
+        builder.then(Commands.literal("remove").then(Commands.literal("nearby")
+                .then(Commands.argument("pos", BlockPosArgument.blockPos()).executes((command) -> {
+                    return removeNearby(command.getSource(), BlockPosArgument.getLoadedBlockPos(command, "pos"));
+                }))).then(Commands.literal("all").executes((command) -> {
+            return removeAll(command.getSource());
+        })));
+        builder.then(Commands.literal("list").then(Commands.argument("targets", EntityArgument.players()).executes((command) -> {
+            return showAllRaid(command.getSource(), EntityArgument.getPlayers(command, "targets"));
+        })));
+        dispatcher.register(builder);
+    }
 
-	private static int addRaid(CommandSourceStack source, ResourceLocation res, BlockPos pos) {
-		if(RaidManager.getRaidComponent(res) != null) {
-			if(! RaidManager.hasRaidNearby(source.getLevel(), pos)) {
-				RaidManager.createRaid(source.getLevel(), res, pos);
-			} else {
-				source.sendFailure(Component.translatable("info.craid.has_raid"));
-			}
-		} else {
-			source.sendFailure(Component.translatable("info.craid.search_fail"));
-		}
-		return 1;
-	}
+    private static int addRaid(CommandSourceStack source, ResourceLocation res, BlockPos pos) {
+        if (RaidManager.getRaidComponent(res) != null) {
+            if (!RaidManager.hasRaidNearby(source.getLevel(), pos)) {
+                RaidManager.createRaid(source.getLevel(), res, pos);
+            } else {
+                source.sendFailure(Component.translatable("info.craid.has_raid"));
+            }
+        } else {
+            source.sendFailure(Component.translatable("info.craid.search_fail"));
+        }
+        return 1;
+    }
 
-	private static int removeNearby(CommandSourceStack source, BlockPos pos) {
-		RaidManager.getRaids(source.getLevel()).forEach(raid -> {
-			if(raid.getCenter().closerThan(pos, CRaidUtil.getRaidRange())) {
-				raid.remove();
-			}
-		});
-		return 1;
-	}
+    private static int removeNearby(CommandSourceStack source, BlockPos pos) {
+        RaidManager.getRaids(source.getLevel()).forEach(raid -> {
+            if (raid.getCenter().closerThan(pos, CRaidUtil.getRaidRange())) {
+                raid.remove();
+            }
+        });
+        return 1;
+    }
 
-	private static int removeAll(CommandSourceStack  source) {
-		RaidManager.getRaids(source.getLevel()).forEach(Raid::remove);
-		return 1;
-	}
+    private static int removeAll(CommandSourceStack source) {
+        RaidManager.getRaids(source.getLevel()).forEach(Raid::remove);
+        return 1;
+    }
 
-	private static int showAllRaid(CommandSourceStack source, Collection<? extends ServerPlayer> targets) {
-		RaidManager.getRaids(source.getLevel()).forEach(raid -> {
-			targets.forEach(p -> CRaidUtil.sendMsgTo(p, Component.literal(raid.getCenter().toString())));
-		});
-		return 1;
-	}
+    private static int showAllRaid(CommandSourceStack source, Collection<? extends ServerPlayer> targets) {
+        RaidManager.getRaids(source.getLevel()).forEach(raid -> {
+            targets.forEach(p -> CRaidUtil.sendMsgTo(p, Component.literal(raid.getCenter().toString())));
+        });
+        return 1;
+    }
 
-	private static ResourceLocation getResourceLocation(CommandContext<CommandSourceStack> source, String string) {
-		return source.getArgument(string, ResourceLocation.class);
-	}
+    private static ResourceLocation getResourceLocation(CommandContext<CommandSourceStack> source, String string) {
+        return source.getArgument(string, ResourceLocation.class);
+    }
 
 }

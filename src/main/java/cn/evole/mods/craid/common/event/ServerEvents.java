@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = CRaid.MOD_ID)
 public class ServerEvents {
 
-	@SubscribeEvent
+    @SubscribeEvent
     public static void serverInit(ServerStartingEvent ev) {
     }
 

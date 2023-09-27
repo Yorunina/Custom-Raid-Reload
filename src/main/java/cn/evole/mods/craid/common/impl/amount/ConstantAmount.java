@@ -6,20 +6,20 @@ import net.minecraft.util.GsonHelper;
 
 public class ConstantAmount implements IAmountComponent {
 
-	public static final String NAME = "count";
-	private int cnt;
+    public static final String NAME = "count";
+    private int cnt;
 
-	public ConstantAmount() {
-	}
+    public ConstantAmount() {
+    }
 
-	@Override
-	public int getSpawnAmount() {
-		return this.cnt;
-	}
+    @Override
+    public int getSpawnAmount() {
+        return this.cnt;
+    }
 
-	@Override
-	public void readJson(JsonElement json) {
-		this.cnt = GsonHelper.convertToInt(json, NAME);
-	}
+    @Override
+    public void readJson(JsonElement json) {
+        this.cnt = GsonHelper.convertToInt(json, NAME);
+    }
 
 }

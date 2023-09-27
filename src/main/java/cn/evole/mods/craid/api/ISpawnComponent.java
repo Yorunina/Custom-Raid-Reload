@@ -6,20 +6,20 @@ import net.minecraft.world.entity.EntityType;
 
 public interface ISpawnComponent {
 
-	/**
-	 * make sure constructer has no argument,
-	 * and use this method to initiate instance.
-	 */
-	boolean readJson(JsonObject json);
+    /**
+     * make sure constructer has no argument,
+     * and use this method to initiate instance.
+     */
+    boolean readJson(JsonObject json);
 
-	int getSpawnTick();
+    int getSpawnTick();
 
-	int getSpawnAmount();
+    int getSpawnAmount();
 
-	IPlacementComponent getPlacement();
+    IPlacementComponent getPlacement();
 
-	CompoundTag getNBT();
+    CompoundTag getNBT();
 
-	EntityType<?> getSpawnType();
+    EntityType<?> getSpawnType();
 
 }

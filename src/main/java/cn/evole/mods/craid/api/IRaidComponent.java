@@ -9,81 +9,81 @@ import java.util.List;
 
 public interface IRaidComponent {
 
-	/**
-	 * make sure constructer has no argument,
-	 * and use this method to initiate instance.
-	 */
-	boolean readJson(JsonObject json);
+    /**
+     * make sure constructer has no argument,
+     * and use this method to initiate instance.
+     */
+    boolean readJson(JsonObject json);
 
-	/**
-	 * get how many ticks needed for players to prepare the wave.
-	 */
-	int getPrepareCD(int wavePos);
+    /**
+     * get how many ticks needed for players to prepare the wave.
+     */
+    int getPrepareCD(int wavePos);
 
-	/**
-	 * get how many ticks will this wave last.
-	 */
-	int getLastDuration(int wavePos);
+    /**
+     * get how many ticks will this wave last.
+     */
+    int getLastDuration(int wavePos);
 
-	/**
-	 * how many waves is there.
-	 */
-	int getMaxWaveCount();
+    /**
+     * how many waves is there.
+     */
+    int getMaxWaveCount();
 
-	/**
-	 * how long will win state last.
-	 */
-	int getWinCD();
+    /**
+     * how long will win state last.
+     */
+    int getWinCD();
 
-	/**
-	 * how long will loss state last.
-	 */
-	int getLossCD();
+    /**
+     * how long will loss state last.
+     */
+    int getLossCD();
 
-	boolean isWaveFinish(int wavePos, int spawnPos);
+    boolean isWaveFinish(int wavePos, int spawnPos);
 
-	boolean hasTag(String tag);
+    boolean hasTag(String tag);
 
-	/**
-	 * respawn all wave when end
-	 */
-	boolean isLoopType();
+    /**
+     * respawn all wave when end
+     */
+    boolean isLoopType();
 
-	/**
-	 * go to the next wave when meet failure
-	 */
-	boolean isFailGoingOn();
+    /**
+     * go to the next wave when meet failure
+     */
+    boolean isFailGoingOn();
 
-	/**
-	 * go to the next wave when meet failure
-	 */
-	boolean doPunishCommand(int wavePos);
+    /**
+     * go to the next wave when meet failure
+     */
+    boolean doPunishCommand(int wavePos);
 
-	List<String> getAuthors();
+    List<String> getAuthors();
 
-	/**
-	 * get spawn list of current wave.
-	 */
-	List<ISpawnComponent> getSpawns(int wavePos);
+    /**
+     * get spawn list of current wave.
+     */
+    List<ISpawnComponent> getSpawns(int wavePos);
 
-	List<IRewardComponent> getRewards();
+    List<IRewardComponent> getRewards();
 
-	IPlacementComponent getPlacement(int wavePos);
+    IPlacementComponent getPlacement(int wavePos);
 
-	Component getRaidTitle();
+    Component getRaidTitle();
 
-	Component getWinTitle();
+    Component getWinTitle();
 
-	Component getLossTitle();
+    Component getLossTitle();
 
-	BossEvent.BossBarColor getBarColor();
+    BossEvent.BossBarColor getBarColor();
 
-	SoundEvent getPrepareSound();
+    SoundEvent getPrepareSound();
 
-	SoundEvent getStartWaveSound();
+    SoundEvent getStartWaveSound();
 
-	SoundEvent getWinSound();
+    SoundEvent getWinSound();
 
-	SoundEvent getLossSound();
+    SoundEvent getLossSound();
 
 }
