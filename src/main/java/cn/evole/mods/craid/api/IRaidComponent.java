@@ -57,7 +57,7 @@ public interface IRaidComponent {
     /**
      * go to the next wave when meet failure
      */
-    boolean doPunishCommand(int wavePos);
+    void doPunishCommand(int wavePos);
 
     List<String> getAuthors();
 

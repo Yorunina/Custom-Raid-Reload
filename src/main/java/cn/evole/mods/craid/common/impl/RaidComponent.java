@@ -14,11 +14,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.common.util.LogicalSidedProvider;
+import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.*;
@@ -191,9 +194,8 @@ public class RaidComponent implements IRaidComponent {
     }
 
     @Override
-    public boolean doPunishCommand(int wavePos) {
+    public void doPunishCommand(int wavePos) {
         String command = this.waves.get(wavePos).getPunishCommand();
-
         Player player = Minecraft.getInstance().player;
         if (Objects.nonNull(player) && Objects.nonNull(player.getServer())) {
             CommandSourceStack commandSourceStack = player.createCommandSourceStack().withSuppressedOutput().withPermission(2);
@@ -201,8 +203,6 @@ public class RaidComponent implements IRaidComponent {
             ParseResults<CommandSourceStack> results = commandDispatcher.parse(command, commandSourceStack);
             player.getServer().getCommands().performCommand(results, command);
         }
-
-        return false;
     }
 
 

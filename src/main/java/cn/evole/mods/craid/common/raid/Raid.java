@@ -84,9 +84,7 @@ public class Raid {
             ListTag list = nbt.getList("heroes", 10);
             for (int i = 0; i < list.size(); ++i) {
                 final UUID uuid = NbtUtils.loadUUID(list.getCompound(i));
-                if (uuid != null) {
-                    this.heroes.add(uuid);
-                }
+                this.heroes.add(uuid);
             }
         }
     }
@@ -144,7 +142,7 @@ public class Raid {
                 this.remove();
             }
         }
-//		System.out.println(this.tick + " " + this.stopTick + " " + this.status + " " + this.center);
+
         if (this.isPreparing()) {
             /* prepare state */
             if (this.tick >= this.raid.getPrepareCD(this.currentWave)) {
